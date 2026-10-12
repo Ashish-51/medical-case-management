@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "medical-case-mgmt-collection-v1",
+		"name": "Medical Case Management API (Jajal Medical)",
+		"description": "Postman / Thunder Client collection for testing the Laravel REST API endpoints with Sanctum token authentication.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Login (Get Token)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@jajalmedical.com\",\n  \"password\": \"password123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			}
+		},
+		{
+			"name": "2. List Cases (Paginated)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/cases?page=1&status=Approved",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"cases"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "status",
+							"value": "Approved"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "3. Get Single Case",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/cases/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"cases",
+						"1"
+					]
+				}
+			}
+		},
+		{
+			"name": "4. Create Case (Admin Only)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"case_number\": \"CASE-9999\",\n  \"patient_reference\": \"PAT-9001\",\n  \"surgeon_name\": \"Dr. Meredith Grey\",\n  \"implant_type\": \"Titanium Cranial Plate\",\n  \"status\": \"Planning\",\n  \"priority\": \"High\",\n  \"surgery_date\": \"2026-11-15\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/cases",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"cases"
+					]
+				}
+			}
+		},
+		{
+			"name": "5. Update Case (Admin / Engineer)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"case_number\": \"CASE-0001\",\n  \"patient_reference\": \"PAT-1082\",\n  \"surgeon_name\": \"Dr. Eleanor Vance\",\n  \"implant_type\": \"Titanium Cranial Plate\",\n  \"status\": \"Approved\",\n  \"priority\": \"High\",\n  \"surgery_date\": \"2026-12-01\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/cases/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"cases",
+						"1"
+					]
+				}
+			}
+		},
+		{
+			"name": "6. Delete Case (Admin Only)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/cases/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"cases",
+						"1"
+					]
+				}
+			}
+		},
+		{
+			"name": "7. Logout (Revoke Token)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/logout",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000"
+		},
+		{
+			"key": "auth_token",
+			"value": ""
+		}
+	]
+}
